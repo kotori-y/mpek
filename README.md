@@ -40,7 +40,7 @@ Clone codes and download necessary data files
 ```shell
 git clone https://github.com/kotori-y/mpek.git
 cd mpek/MTLKcatKM
-mkdir checkpoints
+mkdir checkpoints && cd checkpoints
 wget xxxxxxxxxxxxx.tar.gz # or other method
 tar -zxvf xx.tar.gz
 ```
@@ -111,4 +111,4 @@ sh evaluate.sh $DEVICE $TEST_PATH $SEQUENCE_COLUMN $SMILES_COLUMN $ORGANISM_FLAG
 
 ## Contact
 
-If you have questions or suggestions, please contact: yzjkid9@gmail.<br>Please see the file LICENSE for details about the "MIT" license which covers this software and its associated data and documents.
+If you have questions or suggestions, please contact: yzjkid9@gmail.com.<br>Please see the file LICENSE for details about the "MIT" license which covers this software and its associated data and documents.
