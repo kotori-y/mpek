@@ -18,43 +18,6 @@ MODEL_CONFIG = {
 }
 
 
-class LigandEncoder(nn.Module):
-    def __init__(self, init_model=None, device=None, frozen_params=False):
-        super().__init__()
-        self.embed_dim = 512
-        self.frozen_params = frozen_params
-
-        self.device = device
-        if device is None:
-            self.device = torch.device('cpu')
-
-        self.encoder = GINet(**MODEL_CONFIG)
-        if init_model is not None and init_model != "":
-            state_dict = torch.load(init_model, map_location=self.device)
-            self.encoder.load_my_state_dict(state_dict)
-            print("Loaded pre-trained model with success.")
-
-        if frozen_params:
-            print(f"frozen {self}")
-            for p in self.encoder.parameters():
-                p.requires_grad = False
-        else:
-            for name, p in self.encoder.named_parameters():
-                if "feat_lin" not in name:
-                    p.requires_grad = False
-            print(f"finetune {self}")
-
-    def forward(self, mol_graph):
-        if self.frozen_params:
-            self.encoder.eval()
-            with torch.no_grad():
-                return self.encoder(mol_graph)
-        return self.encoder(mol_graph)
-
-    def __str__(self):
-        return "Ligand Encoder"
-
-
 class LigandEncoderMoleBert(nn.Module):
     def __init__(self, init_model=None, device=None, frozen_params=False):
         super().__init__()

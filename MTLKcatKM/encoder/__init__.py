@@ -3,8 +3,8 @@ from torch import nn
 from torch.utils.data import RandomSampler
 from torch_geometric.loader import DataLoader
 
-from MTLKcatKM.encoder.ligand_encoder import LigandEncoder, LigandEncoderMoleBert
-from MTLKcatKM.encoder.protein_encoder import ProteinEncoder, ProteinEncoderESM2
+from MTLKcatKM.encoder.ligand_encoder import LigandEncoderMoleBert
+from MTLKcatKM.encoder.protein_encoder import ProteinEncoder
 from MTLKcatKM.encoder.auxiliary_encoder import AuxiliaryEncoder
 from MTLKcatKM.layers.attention import MultiHeadAttentionLayer
 from MTLKcatKM.layers.mlp import MLP
@@ -12,7 +12,7 @@ from MTLKcatKM.layers.mlp import MLP
 
 class ComplexEncoder(nn.Module):
     def __init__(
-            self, ligand_enc: LigandEncoder or LigandEncoderMoleBert, protein_enc: ProteinEncoder or ProteinEncoderESM2,
+            self, ligand_enc: LigandEncoderMoleBert, protein_enc: ProteinEncoder,
             auxiliary_enc: AuxiliaryEncoder, use_esm2=False,
             dropout=0.2, use_attention=False, use_ph=True, use_temperature=True, use_organism=True,
             atten_heads=16, device=None
@@ -35,10 +35,6 @@ class ComplexEncoder(nn.Module):
             self.auxiliary_enc = auxiliary_enc
         else:
             self.auxiliary_enc = None
-
-        # self.embed_dim = ligand_enc.embed_dim * 2
-        # self.embed_dim = ligand_enc.embed_dim + protein_enc.embed_dim
-        # assert self.embed_dim == auxiliary_enc.embed_dim
 
         self.ligand_hidden = self.ligand_enc.embed_dim
         self.protein_hidden = self.protein_enc.embed_dim
@@ -80,19 +76,7 @@ class ComplexEncoder(nn.Module):
         else:
             h_aux = None
 
-        # if self.use_attention:
-        #     src_mask = attention_mask.unsqueeze(1).unsqueeze(2)
-        #     _h_prot, attention = self.attn_layer(h_prot, h_prot, h_prot, src_mask)
-        #     h_prot = self.attn_norm_layer(self.dropout_layer(_h_prot) + h_prot)
-        #     _h_prot = self.ff_layer(h_prot)
-        #     h_prot = self.ff_norm_layer(_h_prot + h_prot)
-
-        # print({
-        #     'h_port_shape': h_prot.shape,
-        #     'h_aux_shape': h_aux.shape
-        # })
         return h_lig, h_prot, h_aux
-        # return h_lig, h_prot[:, 0, :]
 
 
 if __name__ == "__main__":

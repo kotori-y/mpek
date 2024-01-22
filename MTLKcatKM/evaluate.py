@@ -136,7 +136,7 @@ def main(args):
         train_normalizer = pickle.load(f)
 
     test_dataset = MTLKDataset(
-        data_path=args.test_path, model_name=args.prottrans_path,
+        data=args.test_data, data_path=args.test_path, model_name=args.prottrans_path,
         normalizer=train_normalizer, evaluate=True, **dataset_params
     )
 
@@ -179,9 +179,7 @@ def main_cli():
 
     parser.add_argument("--max_length", type=int, default=4)
 
-    parser.add_argument("--molclr_path", type=str)
     parser.add_argument("--prottrans_path", type=str)
-    parser.add_argument("--esm_dir", type=str, default=None)
     parser.add_argument("--molebert_dir", type=str, default=None)
 
     parser.add_argument("--tower_hid_layer", type=int, default=1)

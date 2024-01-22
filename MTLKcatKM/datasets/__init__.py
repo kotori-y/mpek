@@ -19,20 +19,24 @@ except:
 from Mole_BERT.loader import mol_to_graph_data_obj_simple
 
 from MTLKcatKM.utils import OrganismTokenizer
-from esm.data import Alphabet
 
 from rdkit import Chem
 
 
 def read_data(
-        data_path, sequence_column, smiles_column, num_tasks=None,
+        data, sequence_column, smiles_column, num_tasks=None,
         label_column=None, organism_column=None, ph_column=None, temperature_column=None,
-        eval=False, only_norm=False, use_ph=True, use_temperature=True, use_organism=True,
+        eval=False, use_ph=True, use_temperature=True, use_organism=True, data_path=None
 ):
-    _, ext = os.path.splitext(data_path)
-    sep = "," if ext == ".csv" else "\t"
 
-    data = pd.read_csv(data_path, sep=sep)
+    if data_path:
+        _, ext = os.path.splitext(data_path)
+        sep = "," if ext == ".csv" else "\t"
+
+        data = pd.read_csv(data_path, sep=sep)
+    else:
+        import io
+        data = pd.read_csv(io.StringIO(data))
     # data = _data.values
 
     sequence_data = data.loc[:, sequence_column].values
@@ -54,53 +58,28 @@ def read_data(
 
 class MTLKDataset(MolTestDataset):
     def __init__(
-            self, data_path, organism_dictionary_path,
+            self, data, organism_dictionary_path,
             sequence_column, smiles_column,
             label_column, organism_column,
             ph_column, temperature_column,
             model_name, max_length=256,
             normalizer: TrainNormalizer = None, evaluate=False,
             use_ph=True, use_temperature=True, use_organism=True,
-            num_tasks=2
+            num_tasks=2, data_path=None
     ):
         super(MolTestDataset, self).__init__(data_path)
         self.max_length = max_length
 
         self.sequence_data, self.smiles_data, self.organisms, self.phs, self.temperatures, self.labels, self.task_names = \
             read_data(
-                data_path,
+                data, data_path=data_path,
                 smiles_column=smiles_column, sequence_column=sequence_column, ph_column=ph_column,
                 temperature_column=temperature_column, organism_column=organism_column, label_column=label_column,
                 eval=evaluate, use_ph=use_ph, use_temperature=use_temperature, use_organism=use_organism,
                 num_tasks=num_tasks
             )
 
-        # if self.use_esm2:
-        #     seq_encoded_list = [alphabet.encode(seq_str) for seq_str in self.sequence_data]
-        #     seq_encoded_list = [seq_str[:self.max_length] for seq_str in seq_encoded_list]
-        #
-        #     self.tokens = torch.empty(
-        #         (
-        #             len(seq_encoded_list),
-        #             max_length + int(alphabet.prepend_bos) + int(alphabet.append_eos),
-        #         ),
-        #         dtype=torch.int64,
-        #     )
-        #
-        #     self.tokens.fill_(alphabet.padding_idx)
-        #     for i, seq_encoded in enumerate(seq_encoded_list):
-        #         if alphabet.prepend_bos:
-        #             self.tokens[i, 0] = alphabet.cls_idx
-        #         seq = torch.tensor(seq_encoded, dtype=torch.int64)
-        #         self.tokens[
-        #         i,
-        #         int(alphabet.prepend_bos): len(seq_encoded)
-        #                                    + int(alphabet.prepend_bos),
-        #         ] = seq
-        #         if alphabet.append_eos:
-        #             self.tokens[i, len(seq_encoded) + int(alphabet.prepend_bos)] = alphabet.eos_idx
-        # else:
-        self.tokenizer = T5Tokenizer.from_pretrained(model_name, do_lower_case=False)
+        self.tokenizer = T5Tokenizer.from_pretrained(model_name, do_lower_case=False, legacy=False)
 
         self.organism_tokenizer = OrganismTokenizer(organism_dictionary_path)
 
@@ -109,10 +88,7 @@ class MTLKDataset(MolTestDataset):
         else:
             self.normalizer = TrainNormalizer(train_path=data_path, label_index=label_column)
 
-        # self.labels = np.log2(10 ** self.labels)
         self.labels = self.normalizer.norm(self.labels).astype(np.float32)
-        # self.labels = self.labels.astype(np.float32)
-        # self.sequence_data = self.normalizer.norm_x(self.sequence_data).astype(np.float32)
 
         self.task = 'regression'
 

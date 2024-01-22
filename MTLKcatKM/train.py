@@ -18,8 +18,6 @@ sys.path.append("../")
 from MTLKcatKM.datasets import MTLKDataset
 from MTLKcatKM.encoder import ProteinEncoder, AuxiliaryEncoder, LigandEncoderMoleBert
 
-# from MTLKcatKM.encoder import ProteinEncoderESM2, LigandEncoder
-
 from MTLKcatKM.model import MTLModel
 from MTLKcatKM.utils import exempt_parameters, get_device, init_distributed_mode, TrainNormalizer, \
     WarmCosine, ChildTuningAdamW
@@ -82,13 +80,6 @@ def train(model: MTLModel, loader, optimizer, device, args, scheduler):
         for k, v in loss_dict.items():
             loss_accum_dict[k] += v
 
-        # i = 0
-        # for task_name, target in labels.items():
-        #     y_true = target.cpu().numpy()
-        #     y_pred = net_outputs[i].detach().cpu().numpy().flatten()
-        #     i += 1
-        #     r2_accum_dict[task_name] += r2_score(y_true, y_pred)
-
         if step % args.log_interval == 0:
             description = f"Iteration loss: {loss_accum_dict['loss'] / (step + 1):6.4f}"
             # for task_name in labels.keys():
@@ -114,8 +105,6 @@ def train(model: MTLModel, loader, optimizer, device, args, scheduler):
 
     for k in loss_accum_dict.keys():
         loss_accum_dict[k] /= (step + 1)
-    # for k in r2_accum_dict.keys():
-    #     r2_accum_dict[k] /= (step + 1)
 
     for task in list(labels.keys()):
         task_true = pred_history[f"{task}_true"]
@@ -130,7 +119,7 @@ def train(model: MTLModel, loader, optimizer, device, args, scheduler):
     return {**loss_accum_dict}, pred_history
 
 
-def evaluate(model: MTLModel, loader, device, normalizer: TrainNormalizer, args):
+def evaluate(model: MTLModel, loader, device, args):
     model.eval()
 
     loss_accum_dict = defaultdict(float)
