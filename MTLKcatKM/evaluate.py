@@ -195,12 +195,15 @@ def main_cli():
     parser.add_argument("--dropout", type=float, default=0.0)
     parser.add_argument("--tower_dropout", type=float, nargs="+")
 
-    parser.add_argument("--use_ph", action="store_true", default=False)
-    parser.add_argument("--use_temperature", action="store_true", default=False)
-    parser.add_argument("--use_organism", action="store_true", default=False)
+    parser.add_argument("--use_ph", type=int, default=0)
+    parser.add_argument("--use_temperature", type=int, default=0)
+    parser.add_argument("--use_organism", type=int, default=0)
 
     args = parser.parse_args()
-    print(args)
+    args.use_ph = bool(args.use_ph)
+    args.use_temperature = bool(args.use_temperature)
+    args.use_organism = bool(args.use_organism)
+    # print(args)
 
     main(args)
 

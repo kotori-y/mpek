@@ -200,8 +200,8 @@ def main(args):
     device = get_device(args.device, args.local_rank)
     # device = get_device(args.device)
 
-    prot_enc = ProteinEncoder(model_dir=args.prottrans_path, device=device, frozen_params=args.frozen_prot_enc)
-    lig_enc = LigandEncoderMoleBert(init_model=args.molebert_dir, device=device, frozen_params=args.frozen_ligand_enc)
+    prot_enc = ProteinEncoder(model_dir=args.prottrans_path, device=device, frozen_params=True)
+    lig_enc = LigandEncoderMoleBert(init_model=args.molebert_dir, device=device, frozen_params=True)
 
     with open(args.organism_dictionary_path) as f:
         _dict = json.load(f)
@@ -457,18 +457,19 @@ def main_cli():
 
     parser.add_argument("--debug", action="store_true", default=False)
 
-    parser.add_argument("--use_ph", action="store_true", default=False)
-    parser.add_argument("--use_temperature", action="store_true", default=False)
-    parser.add_argument("--use_organism", action="store_true", default=False)
-
-    parser.add_argument("--frozen_ligand_enc", action="store_true", default=False)
-    parser.add_argument("--frozen_prot_enc", action="store_true", default=False)
+    parser.add_argument("--use_ph", type=int, default=0)
+    parser.add_argument("--use_temperature", type=int, default=0)
+    parser.add_argument("--use_organism", type=int, default=0)
 
     args = parser.parse_args()
+    args.use_ph = bool(args.use_ph)
+    args.use_temperature = bool(args.use_temperature)
+    args.use_organism = bool(args.use_organism)
+
     if args.distributed:
         init_distributed_mode(args)
-    print(args)
 
+    print(args)
     main(args)
 
 
