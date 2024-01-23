@@ -1,5 +1,7 @@
 # MPEK: a multi-task learning based on pretrained language model for predicting enzymatic reaction kinetic parameters
 
+<img src="./framework.png" style="width: 90%">
+
 ## Background
 
 MPEK is a universal tool for predicting enzyme turnover number (*k*<sub>cat</sub>) and Michaelis-Menten constant (*K*<sub>m</sub>) for all types of enzymes. It uses amino acid sequence of enzyme and SMILES of substrate as inputs, with pH, temperature and species information as optional inputs, and predicts *k*<sub>cat</sub> and *K*<sub>m</sub> based on the CGC multi-task learning framework at the same time. MPEK can comprehensively assess the catalytic efficiency of enzymes based on *k*<sub>cat</sub> and *K*<sub>m</sub>, which will enable rapid screening of efficient target enzymes and their mutants, and accelerate the process of enzyme directed evolution. Therefore, MPEK is expected to be a powerful tool for advancing biocatalysis, drug discovery, metabolic engineering, and other fields that rely on enzyme-catalyzed processes.
@@ -108,6 +110,10 @@ TEMPERATURE_COLUMN='Temperature' # your column name of temperature filed in tabl
 ```shell
 sh evaluate.sh $DEVICE $TEST_PATH $SEQUENCE_COLUMN $SMILES_COLUMN $ORGANISM_FLAG $ORGANISM_COLUMN $PH_FLAG $PH_COLUMN $TEMPERATURE_FLAG $TEMPERATURE_COLUMN
 ```
+
+## Web Server
+
+We also provide an easy-to-use web server: http://mpek.cmdrg.com.
 
 ## Contact
 
