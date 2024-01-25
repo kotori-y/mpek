@@ -42,9 +42,8 @@ Clone codes and download necessary data files
 ```shell
 git clone https://github.com/kotori-y/mpek.git
 cd mpek/MTLKcatKM
-mkdir checkpoints && cd checkpoints
-wget xxxxxxxxxxxxx.tar.gz # or other method
-tar -zxvf xx.tar.gz
+wget https://drive.google.com/file/d/1e7IOSnQfHxII4KpOUitxlyrbBy-09DPm/view?usp=sharing # or other method
+tar -zxvf checkpoints.tar.gz
 ```
 
 ## Pre-training and evaluating
@@ -97,18 +96,15 @@ SEQUENCE_COLUMN='Sequence' # your column name of sequence filed in table
 SMILES_COLUMN='SMILES' # your column name of smiles filed in table
 
 # auxliary columns
-ORGANISM_FLAG=1 # 1 for use organsim encoing, 0 for not
 ORGANISM_COLUMN='Organism' # your column name of organism filed in table
 
-PH_FLAG=1
 PH_COLUMN='pH' # your column name of pH filed in table
 
-TEMPERATURE_FLAG=1
 TEMPERATURE_COLUMN='Temperature' # your column name of temperature filed in table
 ```
 
 ```shell
-sh evaluate.sh $DEVICE $TEST_PATH $SEQUENCE_COLUMN $SMILES_COLUMN $ORGANISM_FLAG $ORGANISM_COLUMN $PH_FLAG $PH_COLUMN $TEMPERATURE_FLAG $TEMPERATURE_COLUMN
+sh evaluate.sh $DEVICE $TEST_PATH $SEQUENCE_COLUMN $SMILES_COLUMN $ORGANISM_COLUMN $PH_COLUMN $TEMPERATURE_COLUMN
 ```
 
 ## Web Server
