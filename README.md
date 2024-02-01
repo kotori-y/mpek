@@ -1,10 +1,10 @@
-# MPEK: a multi-task learning based on pretrained language model for predicting enzymatic reaction kinetic parameters
+# MPEK: a multi-task learning based on pre-trained language model for predicting enzymatic reaction kinetic parameters
 
-<img src="./framework.png" style="width: 90%">
+<img src="./workflow.png" style="width: 90%">
 
 ## Background
 
-MPEK is a universal tool for predicting enzyme turnover number (*k*<sub>cat</sub>) and Michaelis-Menten constant (*K*<sub>m</sub>) for all types of enzymes. It uses amino acid sequence of enzyme and SMILES of substrate as inputs, with pH, temperature and species information as optional inputs, and predicts *k*<sub>cat</sub> and *K*<sub>m</sub> based on the CGC multi-task learning framework at the same time. MPEK can comprehensively assess the catalytic efficiency of enzymes based on *k*<sub>cat</sub> and *K*<sub>m</sub>, which will enable rapid screening of efficient target enzymes and their mutants, and accelerate the process of enzyme directed evolution. Therefore, MPEK is expected to be a powerful tool for advancing biocatalysis, drug discovery, metabolic engineering, and other fields that rely on enzyme-catalyzed processes.
+MPEK is a universal tool for predicting enzyme turnover number (*k*<sub>cat</sub>) and Michaelis constant (*K*<sub>m</sub>) for all types of enzymes. It uses enzyme's amino acid sequence and substrate's SMILES as inputs, with pH, temperature and species information as optional inputs, and predicts *k*<sub>cat</sub> and *K*<sub>m</sub> based on the CGC multi-task learning framework simultaneously. MPEK will help to improve the evaluation of enzymatic efficiency and provide important theoretical support for the screening of enzymes and the mechanistic analysis of enzymatic reactions, thereby accelerating the discovery and optimization of novel target enzymes. MPEK is therefore a promising and powerful tool for advancing biocatalysis, drug discovery, metabolic engineering, and other enzyme-dependent catalytic processes.
 
 ## Installation guide
 
@@ -109,7 +109,7 @@ sh evaluate.sh $DEVICE $TEST_PATH $SEQUENCE_COLUMN $SMILES_COLUMN $ORGANISM_COLU
 
 ## Web Server
 
-We also provide an easy-to-use web server: http://mpek.cmdrg.com.
+We also provide an easy-to-use web server: http://mathtc.nscc-tj.cn/mpek.
 
 ## Contact
 
