@@ -48,7 +48,7 @@ tar -zxvf checkpoints.tar.gz
 
 ### Dataset
 
-The dataset used for training the model can be downloaded through this [link](https://drive.google.com/file/d/1lU8mGrXnf5UjFrXNVLpZxuMivLBH5eWb/view?usp=drive_link).
+The whole dataset used for MPEK can be downloaded from this [link](https://drive.google.com/file/d/1lU8mGrXnf5UjFrXNVLpZxuMivLBH5eWb/view?usp=drive_link).
 
 ## Pre-training and evaluating
 
