@@ -1,13 +1,9 @@
-import os
-
 import torch
 from torch import nn
 
 import sys
 sys.path.append("../..")
 from Mole_BERT.model import GNN_graphpred
-
-from MTLKcatKM.encoder.gin import GINet
 
 MODEL_CONFIG = {
     "num_layer": 5,  # number of graph conv layers
@@ -31,17 +27,17 @@ class LigandEncoderMoleBert(nn.Module):
         self.encoder = GNN_graphpred(5, 300, drop_ratio=0.5)
         if init_model is not None and init_model != "":
             self.encoder.from_pretrained(init_model, device=self.device)
-            print("Loaded pre-trained model with success.")
+            # print("Loaded pre-trained model with success.")
 
         if frozen_params:
-            print(f"frozen {self}")
+            # print(f"frozen {self}")
             for p in self.encoder.parameters():
                 p.requires_grad = False
         else:
             for name, p in self.encoder.named_parameters():
                 if "encoder.gnn.batch_norms.4" not in name:
                     p.requires_grad = False
-            print(f"finetune {self}")
+            # print(f"finetune {self}")
 
     def forward(self, mol_graph):
         if self.frozen_params:

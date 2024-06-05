@@ -40,7 +40,7 @@ def evaluate(model: MTLModel, loader, device, normalizer: TrainNormalizer, args)
 
     pred_result = {}
 
-    pbar = tqdm(loader, desc="Iteration", disable=False)
+    pbar = tqdm(loader, desc="Iteration", disable=True)
 
     for step, batch in enumerate(pbar):
         net_input = {
@@ -149,6 +149,7 @@ def main(args):
 
     print("Evaluating...")
     test_pred = evaluate(model, test_loader, device=device, normalizer=train_normalizer, args=args)
+    # print("\n")  # avoid bug
     print(test_pred)
     # pred_df = pd.DataFrame(test_pred)
     # pred_df.to_csv(f'{args.result_file}', index=False)

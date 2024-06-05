@@ -426,9 +426,7 @@ def main_cli():
 
     parser.add_argument("--max_length", type=int, default=4)
 
-    # parser.add_argument("--molclr_path", type=str)
     parser.add_argument("--prottrans_path", type=str)
-    # parser.add_argument("--esm_dir", type=str, default=None)
     parser.add_argument("--molebert_dir", type=str, default=None)
 
     parser.add_argument("--tower_hid_layer", type=int, default=1)

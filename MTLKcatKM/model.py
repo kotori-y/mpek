@@ -37,8 +37,7 @@ class MTLModel(nn.Module):
 
         self.encoder = ComplexEncoder(
             ligand_enc=ligand_enc, protein_enc=protein_enc, auxiliary_enc=auxiliary_enc,
-            use_ph=use_ph, use_temperature=use_temperature, use_organism=use_organism,
-            dropout=dropout, device=self.device,
+            use_ph=use_ph, use_temperature=use_temperature, use_organism=use_organism, device=self.device,
         )
         self.pro2lig = nn.Linear(protein_enc.embed_dim, ligand_enc.embed_dim)
 
