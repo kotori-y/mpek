@@ -115,6 +115,25 @@ sh evaluate.sh $DEVICE $TEST_PATH $SEQUENCE_COLUMN $SMILES_COLUMN $ORGANISM_COLU
 
 We also provide an easy-to-use web server: http://mathtc.nscc-tj.cn/mpek.
 
+## Cite Us
+
+```
+@article{10.1093/bib/bbae387,
+    author = {Wang, Jingjing and Yang, Zhijiang and Chen, Chang and Yao, Ge and Wan, Xiukun and Bao, Shaoheng and Ding, Junjie and Wang, Liangliang and Jiang, Hui},
+    title = "{MPEK: a multitask deep learning framework based on pretrained language models for enzymatic reaction kinetic parameters prediction}",
+    journal = {Briefings in Bioinformatics},
+    volume = {25},
+    number = {5},
+    pages = {bbae387},
+    year = {2024},
+    month = {08},
+    issn = {1477-4054},
+    doi = {10.1093/bib/bbae387},
+    url = {https://doi.org/10.1093/bib/bbae387},
+    eprint = {https://academic.oup.com/bib/article-pdf/25/5/bbae387/58796749/bbae387.pdf},
+}
+```
+
 ## Contact
 
 If you have questions or suggestions, please contact: yzjkid9@gmail.com.<br>Please see the file LICENSE for details about the "MIT" license which covers this software and its associated data and documents.
